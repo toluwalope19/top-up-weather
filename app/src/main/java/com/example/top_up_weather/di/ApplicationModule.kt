@@ -2,8 +2,14 @@ package com.example.top_up_weather.di
 
 import android.content.Context
 import com.example.top_up_weather.BuildConfig
+import com.example.top_up_weather.data.retrofit.api.WeatherHelper
+import com.example.top_up_weather.data.retrofit.api.WeatherHelperImpl
+import com.example.top_up_weather.data.retrofit.api.WeatherService
+import com.example.top_up_weather.utils.ApiError
 import com.example.top_up_weather.utils.interceptors.NetworkConnectivityInterceptor
 import com.example.top_up_weather.utils.interceptors.NetworkResponseInterceptor
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,12 +55,22 @@ class ApplicationModule {
 
 
 
-//    @Provides
-//    @Singleton
-//    fun provideApiService(retrofit: Retrofit) = retrofit.create(WeatherService::class.java)
-//
-//    @Provides
-//    @Singleton
-//    fun provideApiHelper(apiHelper: WeatherHelperImpl): WeatherHelper = apiHelper
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit) = retrofit.create(WeatherService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApiHelper(apiHelper: WeatherHelperImpl): WeatherHelper = apiHelper
+
+    @Provides
+    @Singleton
+    fun provideApiErrorClass(gson: Gson, @ApplicationContext context: Context): ApiError {
+        return ApiError(gson, context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGSon(): Gson = GsonBuilder().create()
 
 }
