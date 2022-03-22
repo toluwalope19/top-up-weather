@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.top_up_weather.data.model.Weather
-import com.example.top_up_weather.data.retrofit.api.WeatherHelperImpl
+import com.example.top_up_weather.data.remote.api.RemoteImpl
 import com.example.top_up_weather.utils.ApiError
 import com.example.top_up_weather.utils.Resource
 import com.example.top_up_weather.utils.UIEvent
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val weatherHelperImpl: WeatherHelperImpl,
+    private val weatherHelperImpl: RemoteImpl,
     private val apiError: ApiError
 ) : ViewModel() {
 

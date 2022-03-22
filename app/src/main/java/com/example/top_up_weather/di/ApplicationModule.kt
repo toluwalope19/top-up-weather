@@ -1,10 +1,13 @@
 package com.example.top_up_weather.di
 
 import android.content.Context
+import androidx.room.Room
 import com.example.top_up_weather.BuildConfig
-import com.example.top_up_weather.data.retrofit.api.WeatherHelper
-import com.example.top_up_weather.data.retrofit.api.WeatherHelperImpl
-import com.example.top_up_weather.data.retrofit.api.WeatherService
+import com.example.top_up_weather.data.local.WeatherDao
+import com.example.top_up_weather.data.local.WeatherDatabase
+import com.example.top_up_weather.data.remote.api.RemoteSource
+import com.example.top_up_weather.data.remote.api.RemoteImpl
+import com.example.top_up_weather.data.remote.api.WeatherService
 import com.example.top_up_weather.utils.ApiError
 import com.example.top_up_weather.utils.interceptors.NetworkConnectivityInterceptor
 import com.example.top_up_weather.utils.interceptors.NetworkResponseInterceptor
@@ -54,14 +57,13 @@ class ApplicationModule {
             .build()
 
 
-
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit) = retrofit.create(WeatherService::class.java)
 
     @Provides
     @Singleton
-    fun provideApiHelper(apiHelper: WeatherHelperImpl): WeatherHelper = apiHelper
+    fun provideApiHelper(apiHelper: RemoteImpl): RemoteSource = apiHelper
 
     @Provides
     @Singleton
@@ -72,5 +74,22 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideGSon(): Gson = GsonBuilder().create()
+
+    @Singleton
+    @Provides
+    fun provideBlogDb(@ApplicationContext context: Context): WeatherDatabase {
+        return Room.databaseBuilder(
+            context,
+            WeatherDatabase::class.java,
+            WeatherDatabase.DATABASE_NAME
+        ).fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideWeatherDAO(weatherDatabase: WeatherDatabase): WeatherDao?{
+        return weatherDatabase.weatherDao()
+    }
 
 }

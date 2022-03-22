@@ -1,8 +1,21 @@
 package com.example.top_up_weather.data.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+
+
+@Entity(tableName = "weather")
 data class Weather(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    @ColumnInfo(name = "cnt")
     val cnt: Int,
-    val list: List<CityWeather>
+    @ColumnInfo(name = "list")
+    val list: List<CityWeather>,
+    @ColumnInfo(name = "isLiked")
+    val isLiked: Boolean
 )
 
 data class WeatherX(
