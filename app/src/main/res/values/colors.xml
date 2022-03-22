@@ -7,4 +7,141 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#121212</color>
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorAccent">#D0A23C</color>
+    <color name="bottom_bar">#FFFFFF</color>
+
+
+    <color name="colorHomeBackground">#E5E5E5</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorHomeBackgroundTwo">#FFFFFF</color>
+    <color name="colorPrimaryButton">#D0A23C</color>
+    <color name="colorPrimaryLightButton">#70D0A23C</color>
+    <color name="colorLightBlue">#FAF5EB</color>
+    <color name="colorDashboard">#D0A23C</color>
+    <color name="colorInputFields">#FAFAFA</color>
+    <color name="colorDialogInputFields">#FAFAFA</color>
+    <color name="colorSecondaryBlue">#77502F</color>
+
+    <color name="spendingTagSelected">#3E62BE</color>
+    <color name="unSpendingTagSelected">#FAFAFA</color>
+
+    <color name="colorDarkBlue">#3655A6</color>
+    <color name="colorFreqButton">#FAFAFA</color>
+    <color name="colorTextBody">#37474F</color>
+    <color name="colorTextBodyReceipt">#37474F</color>
+    <color name="colorTextBodyLight">#69747A</color>
+    <color name="colorBrief">#FAF5EB</color>
+    <color name="colorAsh">#FAF5EB</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGray">#C4C4C4</color>
+    <color name="colorFullGray">#C4C4C4</color>
+    <color name="colorRegBusiness">#000000</color>
+
+    <color name="colorLoginGradientEndStart">#5CEEA7</color>
+    <color name="colorLoginGradientStartColor">#49A399</color>
+    <color name="colorEditTextBorder">#EAECF0</color>
+    <color name="colorIncomeBarChart">#D0A23C</color>
+    <color name="colorExpenseBarChart">#D03C6A</color>
+    <color name="colorEditTextBorderDarkOnly">#282727</color>
+
+    <color name="colorTransactionDebit">#231F20</color>
+    <color name="colorLoansOptions">#F5ECD8</color>
+    <color name="colorTransactionItems">#F5ECD8</color>
+    <color name="colorBillOptions">#CDE9FF</color>
+    <color name="colorTextDrawable">#69747A</color>
+
+    <color name="colorProgressLight">#2077502F</color>
+    <color name="colorBlue">#359BE0</color>
+    <color name="colorDashedBorder">#828282</color>
+    <color name="colorSavingsGoalText">#4E4E4E</color>
+    <color name="colorCreateGoalText">#FFFFFF</color>
+    <color name="colorStartUsingMint">#091610</color>
+    <color name="colorSavingGoalOutline">#E8F1F8</color>
+    <color name="colorEditBvn">#F2F2F2</color>
+    <color name="colorEditProfileText">#918F8F</color>
+
+    <color name="colorFinanceGradientStartColor">#E2EAFF</color>
+    <color name="colorFinanceGradientEndColor">#1FF2F7FD</color>
+    <color name="colorTransactionContour">#6C95FF</color>
+
+    <color name="colorBasicInfo">#F5F8FF</color>
+    <color name="colorProfileBorderInfo">#F5F8FF</color>
+    <color name="colorUploadID">#F5F8FF</color>
+    <color name="colorUploadSelfIe">#F5F8FF</color>
+    <color name="snackBb">#1A1919</color>
+    <color name="colorDialogBackgroundOffWhite">#F2F2F2</color>
+    <color name="colorDialogBackgroundLight">#FFF2F2</color>
+    <color name="colorSmallButtonBG">#50C4C4C4</color>
+    <color name="colorDialogBackground">#FFFFFF</color>
+    <color name="colorDialogBackgroundDark">#FFFFFF</color>
+    <color name="colorDialogBackgroundTrans">#70282727</color>
+    <color name="colorLayoutBackground">#FFFFFF</color>
+
+    <color name="colorWhiteOrBlack">#FFFFFF</color>
+    <color name="colorBlackOrWhite">#121212</color>
+    <color name="colorViewBorder">#EAECF0</color>
+    <color name="colorWhiteOrGoldBorder">#FFFFFF</color>
+    <color name="colorBlackOrGold">#121212</color>
+
+    <color name="colorLoanHint">#FFFFFF</color>
+    <color name="colorWithdrawalType">#B9B9B9</color>
+
+    <color name="colorBvnArrowDown">#77502F</color>
+    <color name="colorBvnSecureLock">#37474F</color>
+    <color name="colorBvnViewBorder">#77502F</color>
+
+    <color name="colorDeletePendingWithdrawal">#37474F</color>
+    <color name="colorPartnerLocationPin">#69747A</color>
+    <color name="colorSelectedPageIndicator">#D0A23C</color>
+    <color name="colorUnSelectedPageIndicator">#FAF5EB</color>
+    <color name="colorBottomBarSelectedIconInactiveState">#37474F</color>
+
+    <color name="colorArrowDown">#69747A</color>
+    <color name="colorDashedBorderBackground">#FAFAFA</color>
+    <color name="colorViewDivider">#E8F1F8</color>
+
+    <color name="colorRemoveBeneficiary">#69747A</color>
+    <color name="colorCopyAccountNumber">#000000</color>
+    <color name="colorSelectedSpendingTag">#3E62BE</color>
+    <color name="colorTypeMintOrOthers">#FFFFFF</color>
+    <color name="colorTypeMintOrOthersOutline">#E8F1F8</color>
+
+    <color name="colorMenuOptions">#FAF5EB</color>
+    <color name="colorLatestTransactions">#E2EAFF</color>
+    <color name="colorMenuOptionsOutline">#FAF5EB</color>
+    <color name="colorPartnerStores">#FAF5EB</color>
+    <color name="colorNotificationDate">#D03C6A</color>
+    <color name="colorReadNotification">#FAF5EB</color>
+    <color name="colorLoansAndBillText">#37474F</color>
+
+    <color name="colorFailedBackground">#231F20</color>
+    <color name="colorPendingBackground">#535353</color>
+
+
+    <color name="randomOne">#DE5D83</color>
+    <color name="randomTwo">#D192FF</color>
+    <color name="randomThree">#89CFF0</color>
+    <color name="randomFour">#FFB631</color>
+    <color name="randomFive">#E6E6FA</color>
+    <color name="randomSix">#FFFFFF</color>
+    <color name="randomSeven">#50C878</color>
+
+
+    <color name="colorOrderCompleted">#4ABE86</color>
+    <color name="colorMintStoreRating">#3E62BE</color>
+
+    <color name="colorThinLineBackground">#E8F1F8</color>
+
+    <color name="colorSavingCircle">#605BC0</color>
+    <color name="colorRoundUpSavings">#558760</color>
+    <color name="receiptText">#8A8A8A</color>
+
+    <color name="transactionBackground">#46382C</color>
+    <color name="transactionSeeAllText">#9F8F81</color>
+    <color name="timerColor">#558760</color>
+
 </resources>

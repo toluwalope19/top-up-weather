@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#121212</color>
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorAccent">#D0A23C</color>
+
+    <color name="colorHomeBackground">#121212</color>
+    <color name="colorHomeBackgroundTwo">#121212</color>
+    <color name="colorPrimaryButton">#D0A23C</color>
+    <color name="colorLightBlue">#231F20</color>
+    <color name="colorDashboard">#D0A23C</color>
+    <color name="colorInputFields">#393939</color>
+    <color name="colorDialogInputFields">#393939</color>
+    <color name="colorSecondaryBlue">#4DB2FF</color>
+    <color name="colorRegBusiness">#DBDBDB</color>
+    <color name="colorEditBvn">#292721</color>
+    <color name="colorEditProfileText">#918F8F</color>
+
+    <color name="spendingTagSelected">#3E62BE</color>
+    <color name="unSpendingTagSelected">#393939</color>
+
+    <color name="colorFreqButton">#373D3F</color>
+    <color name="colorDarkBlue">#3655A6</color>
+    <color name="colorTextBody">#FFFFFF</color>
+    <color name="colorTextBodyReceipt">#D3D2D2</color>
+    <color name="colorTextBodyLight">#D3D2D2</color>
+    <color name="colorBrief">#282727</color>
+    <color name="colorAsh">#4F4B4C</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGray">#80C4C4C4</color>
+    <color name="colorFullGray">#C4C4C4</color>
+
+    <color name="colorLoginGradientEndStart">#5CEEA7</color>
+    <color name="colorLoginGradientStartColor">#49A399</color>
+    <color name="colorEditTextBorder">#282727</color>
+    <color name="colorIncomeBarChart">#D0A23C</color>
+    <color name="colorExpenseBarChart">#D03C6A</color>
+
+    <color name="colorTransactionDebit">#D03C6A</color>
+    <color name="colorLoansOptions">#FFCDD3</color>
+    <color name="colorTransactionItems">#D0A23C</color>
+    <color name="colorBillOptions">#D192FF</color>
+    <color name="colorTextDrawable">#D3D2D2</color>
+
+    <color name="colorProgressLight">#204DB2FF</color>
+    <color name="colorBlue">#359BE0</color>
+    <color name="colorDashedBorder">#C4C4C4</color>
+    <color name="colorSavingsGoalText">#FFFFFF</color>
+    <color name="colorCreateGoalText">#FFFFFF</color>
+    <color name="colorStartUsingMint">#FFFFFF</color>
+    <color name="colorSavingGoalOutline">#282727</color>
+
+    <color name="colorFinanceGradientStartColor">#4F3E62BE</color>
+    <color name="colorFinanceGradientEndColor">#003E62BE</color>
+    <color name="colorTransactionContour">#3E62BE</color>
+
+    <color name="colorBasicInfo">#121212</color>
+    <color name="colorProfileBorderInfo">#393536</color>
+    <color name="colorUploadID">#121212</color>
+    <color name="colorUploadSelfIe">#121212</color>
+
+    <color name="colorDialogBackgroundOffWhite">#282727</color>
+    <color name="colorSmallButtonBG">#1D1C1C</color>
+    <color name="colorDialogBackground">#282727</color>
+    <color name="colorDialogBackgroundLight">#1A1919</color>
+    <color name="colorDialogBackgroundDark">#212121</color>
+    <color name="colorDialogBackgroundTrans">#70282727</color>
+    <color name="colorLayoutBackground">#121212</color>
+
+    <color name="colorViewBorder">#393536</color>
+    <color name="colorWhiteOrBlack">#121212</color>
+    <color name="colorBlackOrWhite">#FFFFFF</color>
+    <color name="colorWhiteOrGoldBorder">#D0A23C</color>
+    <color name="colorBlackOrGold">#D0A23C</color>
+
+    <color name="colorLoanHint">#15D0A23C</color>
+    <color name="colorWithdrawalType">#292929</color>
+
+    <color name="colorBvnArrowDown">#C4C4C4</color>
+    <color name="colorBvnSecureLock">#C4C4C4</color>
+    <color name="colorBvnViewBorder">#393536</color>
+
+    <color name="colorDeletePendingWithdrawal">#D0A23C</color>
+    <color name="colorPartnerLocationPin">#C4C4C4</color>
+    <color name="colorSelectedPageIndicator">#D0A23C</color>
+    <color name="colorUnSelectedPageIndicator">#FAF5EB</color>
+    <color name="colorBottomBarSelectedIconInactiveState">#D3D2D2</color>
+
+    <color name="colorArrowDown">#C4C4C4</color>
+    <color name="colorDashedBorderBackground">#231F20</color>
+    <color name="colorViewDivider">#4F4B4C</color>
+
+    <color name="colorRemoveBeneficiary">#D0A23C</color>
+    <color name="colorCopyAccountNumber">#D3D2D2</color>
+    <color name="colorSelectedSpendingTag">#3E62BE</color>
+    <color name="colorTypeMintOrOthers">#1D1C1C</color>
+    <color name="colorTypeMintOrOthersOutline">#1D1C1C</color>
+
+    <color name="colorMenuOptions">#393536</color>
+    <color name="colorLatestTransactions">#393536</color>
+    <color name="colorMenuOptionsOutline">#121212</color>
+    <color name="colorPartnerStores">#282727</color>
+    <color name="colorNotificationDate">#D03C6A</color>
+    <color name="colorReadNotification">#C4C4C4</color>
+    <color name="colorLoansAndBillText">#37474F</color>
+
+    <color name="colorThinLineBackground">#4F4B4C</color>
+    <color name="receiptText">#C4C4C4</color>
+    <color name="timerColor">#FFD36C</color>
+</resources>

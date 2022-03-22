@@ -1,4 +1,4 @@
-package com.example.top_up_weather.ui
+package com.example.top_up_weather.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,6 @@ import com.example.top_up_weather.utils.Resource
 import com.example.top_up_weather.utils.UIEvent
 import com.example.top_up_weather.utils.Utils.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
