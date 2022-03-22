@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -38,22 +40,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpObserver() {
-        viewModel.getWeather.observe(viewLifecycleOwner, Observer { uiEvent ->
-            uiEvent.getContentIfNotHandled()?.let {
-                when (it.status) {
-                    Resource.Status.LOADING -> {
-                        progress.visibility = View.VISIBLE
-                    }
-                    Resource.Status.SUCCESS -> {
-                        progress.visibility = View.GONE
-                        textView.text = it.data?.list.toString()
-                        Log.d("response", it.data?.list.toString())
-                    }
-                    Resource.Status.ERROR -> {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
+        viewModel.getWeather.observe(viewLifecycleOwner, Observer {
+            textView.text = it.data?.list.toString()
+            progress.isVisible = it is Resource.Loading && it.data?.list.isNullOrEmpty()
+            tv_error2.isVisible= it is Resource.Error && it.data?.list.isNullOrEmpty()
+            tv_error2.text = it.error?.message
 
         })
     }

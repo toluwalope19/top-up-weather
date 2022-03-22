@@ -1,4 +1,4 @@
-package com.example.top_up_weather.data.local
+package com.example.top_up_weather.data.local.db
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -14,4 +14,7 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(weather: Weather?)
+
+    @Query("DELETE FROM weather")
+    suspend fun deleteWeather()
 }

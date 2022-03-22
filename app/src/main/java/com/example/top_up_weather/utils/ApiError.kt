@@ -5,6 +5,7 @@ import com.example.top_up_weather.R
 import com.example.top_up_weather.utils.exceptions.NoNetworkException
 import com.example.top_up_weather.utils.exceptions.ServerException
 import com.google.gson.Gson
+import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -33,6 +34,7 @@ class ApiError @Inject constructor(private val gson: Gson, private val context: 
 
         }
     }
+
 
 
     data class ErrorResponse(
