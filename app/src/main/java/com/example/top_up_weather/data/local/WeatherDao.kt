@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.model.Weather
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +17,4 @@ interface WeatherDao {
 
     @Query("DELETE FROM weather")
     suspend fun deleteWeather()
-
-
 }

@@ -1,25 +1,18 @@
 package com.example.top_up_weather.di
 
 import android.content.Context
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.room.Room
 import com.example.top_up_weather.BuildConfig
-import com.example.top_up_weather.data.local.LocalDataSource
-import com.example.top_up_weather.data.local.db.WeatherDao
-import com.example.top_up_weather.data.local.db.WeatherDatabase
+import com.example.top_up_weather.data.local.WeatherDao
+import com.example.top_up_weather.data.local.WeatherDatabase
 import com.example.top_up_weather.data.remote.api.RemoteSource
 import com.example.top_up_weather.data.remote.api.RemoteImpl
 import com.example.top_up_weather.data.remote.api.WeatherService
-import com.example.top_up_weather.repository.Repository
-import com.example.top_up_weather.repository.WeatherRepository
 import com.example.top_up_weather.utils.ApiError
-import com.example.top_up_weather.utils.AppCoroutineDispatchers
 import com.example.top_up_weather.utils.interceptors.NetworkConnectivityInterceptor
 import com.example.top_up_weather.utils.interceptors.NetworkResponseInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +22,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -42,19 +34,24 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext context: Context) : OkHttpClient {
-        return OkHttpClient.Builder()
+    fun provideOkHttpClient(@ApplicationContext context: Context) = if (BuildConfig.DEBUG) {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
             .addInterceptor(NetworkConnectivityInterceptor(context))
             .addInterceptor(NetworkResponseInterceptor())
-            .callTimeout(10L, TimeUnit.MINUTES).build()
-    }
+            .build()
+    } else OkHttpClient
+        .Builder()
+        .build()
 
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson,okHttpClient: OkHttpClient, BASE_URL: String): Retrofit =
+    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit =
         Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
@@ -80,7 +77,7 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideWeatherDb(@ApplicationContext context: Context): WeatherDatabase {
+    fun provideBlogDb(@ApplicationContext context: Context): WeatherDatabase {
         return Room.databaseBuilder(
             context,
             WeatherDatabase::class.java,
@@ -91,24 +88,8 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideWeatherDAO(@NonNull weatherDatabase: WeatherDatabase): WeatherDao {
+    fun provideWeatherDAO(weatherDatabase: WeatherDatabase): WeatherDao?{
         return weatherDatabase.weatherDao()
-    }
-
-
-    @Provides
-    fun provideDispatcher(): AppCoroutineDispatchers {
-        return AppCoroutineDispatchers()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRepository(
-        dispatchers: AppCoroutineDispatchers,
-        localDataSource: LocalDataSource,
-        remoteSource: RemoteSource
-    ): WeatherRepository{
-        return WeatherRepository(dispatchers,remoteSource, localDataSource)
     }
 
 }

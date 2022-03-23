@@ -2,8 +2,12 @@ package com.example.top_up_weather.ui.home
 
 import androidx.lifecycle.*
 import com.example.top_up_weather.data.model.Weather
+import com.example.top_up_weather.data.remote.api.RemoteImpl
 import com.example.top_up_weather.repository.WeatherRepository
+import com.example.top_up_weather.utils.ApiError
 import com.example.top_up_weather.utils.Resource
+import com.example.top_up_weather.utils.UIEvent
+import com.example.top_up_weather.utils.Utils.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
@@ -29,18 +33,21 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getWeatherList() {
+
         repository.fetchWeather()
             .onEach {
                 _getWeather.trySend(it).isSuccess
             }.launchIn(viewModelScope)
 
-    }
-
-//    fun addFavourites(item: Weather){
 //        viewModelScope.launch {
-//            repository.saveFavourite(item)
+//
+//            _getWeather.postValue(UIEvent(Resource.loading(null)))
+//            try {
+//                val response = weatherHelperImpl.getCurrentWeather(countryQueryString)
+//                _getWeather.postValue(UIEvent(Resource.success(response.body())))
+//            } catch (e: Throwable) {
+//                _getWeather.postValue(UIEvent(Resource.error(e, null)))
+//            }
 //        }
-//    }
-
-
+    }
 }
