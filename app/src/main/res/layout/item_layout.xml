@@ -41,22 +41,30 @@
             app:layout_constraintStart_toEndOf="@id/temp"/>
 
 
-
-        <com.like.LikeButton
-            app:icon_type="heart"
-            app:icon_size="40dp"
+        <ImageView
+            android:id="@+id/unliked"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/heart"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="20dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/star_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/liked"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/heart_liked"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </androidx.cardview.widget.CardView>

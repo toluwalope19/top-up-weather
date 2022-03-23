@@ -85,6 +85,7 @@ dependencies {
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.9.2"
 
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.5"

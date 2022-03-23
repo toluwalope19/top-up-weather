@@ -8,6 +8,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.top_up_weather.R
 import com.example.top_up_weather.data.model.CityWeather
+import kotlinx.android.synthetic.main.item_layout.view.*
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.example.top_up_weather.R
+import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.model.Weather
 import kotlinx.android.synthetic.main.item_layout.view.*
 import java.util.*
@@ -56,7 +66,10 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
             delegate: OnItemClickListener?,
             cityWeather: CityWeather
         ) {
-            itemView.setOnClickListener {
+            itemView.liked.setOnClickListener {
+                delegate?.onLikeClicked(position,cityWeather)
+            }
+            itemView.unliked.setOnClickListener {
                 delegate?.onLikeClicked(position,cityWeather)
             }
         }

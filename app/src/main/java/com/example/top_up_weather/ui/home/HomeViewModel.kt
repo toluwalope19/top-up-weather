@@ -50,4 +50,10 @@ class HomeViewModel @Inject constructor(
 //            }
 //        }
     }
+
+    fun saveWeather(weather: Weather){
+        viewModelScope.launch {
+            repository.saveWeather(weather)
+        }
+    }
 }

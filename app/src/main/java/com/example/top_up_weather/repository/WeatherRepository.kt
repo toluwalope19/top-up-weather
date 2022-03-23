@@ -37,6 +37,9 @@ class WeatherRepository @Inject constructor(
         localDataSource.save(weather)
     }
 
+    suspend fun saveWeather(weather: Weather){
+        localDataSource.save(weather)
+    }
 
 
 }

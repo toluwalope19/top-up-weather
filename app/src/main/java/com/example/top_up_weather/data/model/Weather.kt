@@ -15,9 +15,7 @@ data class Weather(
     @ColumnInfo(name = "cnt")
     val cnt: Int,
     @ColumnInfo(name = "list")
-    val list: List<CityWeather>,
-    @ColumnInfo(name = "isLiked")
-    val isLiked: Boolean
+    val list: List<CityWeather>
 )
 
 @JsonClass(generateAdapter = true)
@@ -67,5 +65,6 @@ data class CityWeather (
     val sys: Sys,
     val visibility: Int,
     val weather: List<WeatherX>,
-    val wind: Wind
+    val wind: Wind,
+    val isLiked: Boolean
 )

@@ -16,6 +16,8 @@ import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.model.Weather
 import com.example.top_up_weather.ui.home.adapter.WeatherAdapter
 import com.example.top_up_weather.utils.Resource
+import com.like.LikeButton
+import com.like.OnLikeListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_layout.view.*
@@ -29,6 +31,8 @@ import com.like.OnLikeListener
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
+
+    var weather : Weather? = null
 
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreateView(
@@ -52,8 +56,9 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
         viewModel.getWeather.observe(viewLifecycleOwner, Observer {
 
             val list = mutableListOf<CityWeather>()
+            weather = it.data
             it.data?.list?.let { list.addAll(it) }
-           // weather_list.adapter = WeatherAdapter(list,this)
+            weather_list.adapter = WeatherAdapter(list,this)
             Log.e("newliiist",list.toString())
 
             progress.isVisible = it is Resource.Loading && it.data?.list.isNullOrEmpty()
@@ -69,13 +74,5 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
 
     override fun onLikeClicked(view: View, cityWeather: CityWeather) {
 
-        view.star_button .setOnLikeListener(object : OnLikeListener {
-            override fun liked(likeButton: LikeButton) {
-               Toast.makeText(requireContext(),"liiiiked",Toast.LENGTH_LONG).show()
-            }
-            override fun unLiked(likeButton: LikeButton) {
-                Toast.makeText(requireContext(),"unliike",Toast.LENGTH_LONG).show()
-            }
-        })
     }
 }
