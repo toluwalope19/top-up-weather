@@ -1,6 +1,5 @@
 package com.example.top_up_weather.repository
 
-import android.content.Context
 import android.util.Log
 import com.example.top_up_weather.data.local.LocalDataSource
 import com.example.top_up_weather.data.model.Weather
@@ -23,7 +22,7 @@ class WeatherRepository @Inject constructor(
     override fun fetchWeather(): Flow<Resource<Weather>> {
         return flow<Resource<Weather>> {
             val currentData: Weather = localDataSource.getWeather().first()
-            //Log.e("currrentdata", currentData.toString())
+            Log.e("currrentdata", currentData.toString())
             emit(Resource.Loading(currentData))
             fetchWeatherAndCache()
             emitAll(localDataSource.getWeather().map { Resource.Success(it) })
@@ -38,6 +37,7 @@ class WeatherRepository @Inject constructor(
         val weather: Weather? = remoteSource.getCurrentWeather(citiesQueryString).body()
         localDataSource.save(weather)
     }
+
 
 
 }

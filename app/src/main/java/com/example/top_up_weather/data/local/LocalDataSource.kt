@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDataSource {
     suspend fun save(weather: Weather?)
     fun getWeather(): Flow<Weather>
-   suspend fun deleteWeather()
+    suspend fun deleteWeather()
+
 }

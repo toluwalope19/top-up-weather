@@ -3,21 +3,18 @@ package com.example.top_up_weather.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.top_up_weather.data.local.TypeConverters
 import com.squareup.moshi.JsonClass
 
 
 @Entity(tableName = "weather")
 @JsonClass(generateAdapter = true)
 data class Weather(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val id: Int = 0,
     @ColumnInfo(name = "cnt")
     val cnt: Int,
     @ColumnInfo(name = "list")
-    val list: List<CityWeather>,
-    @ColumnInfo(name = "isLiked")
-    val isLiked: Boolean
+    val list: List<CityWeather>
 )
 
 @JsonClass(generateAdapter = true)
@@ -67,5 +64,5 @@ data class CityWeather (
     val sys: Sys,
     val visibility: Int,
     val weather: List<WeatherX>,
-    val wind: Wind
+    val wind: Wind,
 )

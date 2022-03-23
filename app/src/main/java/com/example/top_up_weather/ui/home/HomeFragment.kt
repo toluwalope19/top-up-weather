@@ -6,20 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.example.top_up_weather.R
+import com.example.top_up_weather.data.model.CityWeather
+import com.example.top_up_weather.data.model.Weather
+import com.example.top_up_weather.ui.home.adapter.WeatherAdapter
 import com.example.top_up_weather.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_layout.view.*
+import com.like.LikeButton
+
+import com.like.OnLikeListener
+
+
+
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
 
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreateView(
@@ -41,7 +50,12 @@ class HomeFragment : Fragment() {
 
     private fun setUpObserver() {
         viewModel.getWeather.observe(viewLifecycleOwner, Observer {
-            textView.text = it.data?.list.toString()
+
+            val list = mutableListOf<CityWeather>()
+            it.data?.list?.let { list.addAll(it) }
+           // weather_list.adapter = WeatherAdapter(list,this)
+            Log.e("newliiist",list.toString())
+
             progress.isVisible = it is Resource.Loading && it.data?.list.isNullOrEmpty()
             tv_error2.isVisible= it is Resource.Error && it.data?.list.isNullOrEmpty()
             tv_error2.text = it.error?.message
@@ -51,5 +65,17 @@ class HomeFragment : Fragment() {
 
     companion object {
         fun newInstance() = HomeFragment()
+    }
+
+    override fun onLikeClicked(view: View, cityWeather: CityWeather) {
+
+        view.star_button .setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+               Toast.makeText(requireContext(),"liiiiked",Toast.LENGTH_LONG).show()
+            }
+            override fun unLiked(likeButton: LikeButton) {
+                Toast.makeText(requireContext(),"unliike",Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

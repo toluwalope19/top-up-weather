@@ -1,13 +1,10 @@
 package com.example.top_up_weather.data.local
 
-import android.util.Log
 import androidx.room.TypeConverter
 import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.model.Weather
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.squareup.moshi.Moshi
-import java.io.IOException
 import java.util.*
 
 class TypeConverters {
@@ -25,7 +22,7 @@ class TypeConverters {
             return Collections.emptyList()
         }
 
-        val listType = object : TypeToken<List<CityWeather>>() {
+        val listType = object : TypeToken<List<Weather>>() {
 
         }.type
 

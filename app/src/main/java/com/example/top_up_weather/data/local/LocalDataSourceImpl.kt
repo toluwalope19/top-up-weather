@@ -19,4 +19,5 @@ class LocalDataSourceImpl @Inject constructor(private val weatherDao: WeatherDao
     override suspend fun deleteWeather() {
         weatherDao.deleteWeather()
     }
+
 }
