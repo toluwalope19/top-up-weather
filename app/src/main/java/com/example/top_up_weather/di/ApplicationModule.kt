@@ -2,12 +2,15 @@ package com.example.top_up_weather.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.top_up_weather.AppCoroutineDispatcher
 import com.example.top_up_weather.BuildConfig
-import com.example.top_up_weather.data.local.WeatherDao
+import com.example.top_up_weather.data.local.LocalDataSource
 import com.example.top_up_weather.data.local.WeatherDatabase
-import com.example.top_up_weather.data.remote.api.RemoteSource
+import com.example.top_up_weather.data.local.db.WeatherDao
 import com.example.top_up_weather.data.remote.api.RemoteImpl
+import com.example.top_up_weather.data.remote.api.RemoteSource
 import com.example.top_up_weather.data.remote.api.WeatherService
+import com.example.top_up_weather.repository.WeatherRepository
 import com.example.top_up_weather.utils.ApiError
 import com.example.top_up_weather.utils.interceptors.NetworkConnectivityInterceptor
 import com.example.top_up_weather.utils.interceptors.NetworkResponseInterceptor
@@ -77,7 +80,7 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideBlogDb(@ApplicationContext context: Context): WeatherDatabase {
+    fun provideWeatherDb(@ApplicationContext context: Context): WeatherDatabase {
         return Room.databaseBuilder(
             context,
             WeatherDatabase::class.java,
@@ -88,8 +91,22 @@ class ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideWeatherDAO(weatherDatabase: WeatherDatabase): WeatherDao?{
+    fun provideWeatherDAO(weatherDatabase: WeatherDatabase): WeatherDao {
         return weatherDatabase.weatherDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRepository(
+        appCoroutineDispatcher: AppCoroutineDispatcher, localDataSource: LocalDataSource,
+        remoteSource: RemoteSource
+    ): WeatherRepository {
+        return WeatherRepository(appCoroutineDispatcher, remoteSource, localDataSource)
+    }
+
+    @Provides
+    fun provideDispatcher(): AppCoroutineDispatcher {
+        return AppCoroutineDispatcher()
     }
 
 }

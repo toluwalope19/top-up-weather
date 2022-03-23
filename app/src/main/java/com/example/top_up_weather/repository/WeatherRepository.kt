@@ -1,16 +1,15 @@
 package com.example.top_up_weather.repository
 
-import android.util.Log
+import com.example.top_up_weather.AppCoroutineDispatcher
 import com.example.top_up_weather.data.local.LocalDataSource
 import com.example.top_up_weather.data.model.Weather
 import com.example.top_up_weather.data.remote.api.RemoteSource
-import com.example.top_up_weather.utils.AppCoroutineDispatchers
 import com.example.top_up_weather.utils.Resource
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class WeatherRepository @Inject constructor(
-    private val dispatcher: AppCoroutineDispatchers,
+    private val dispatcher: AppCoroutineDispatcher,
     private val remoteSource: RemoteSource,
     private val localDataSource: LocalDataSource,
 ) : Repository {

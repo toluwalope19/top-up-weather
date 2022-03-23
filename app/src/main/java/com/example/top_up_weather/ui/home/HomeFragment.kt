@@ -58,7 +58,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
 
             progress.isVisible = it is Resource.Loading && it.data?.list.isNullOrEmpty()
             tv_error2.isVisible= it is Resource.Error && it.data?.list.isNullOrEmpty()
-            tv_error2.text = it.error?.message
+            tv_error2.text = it.message
 
         })
     }
