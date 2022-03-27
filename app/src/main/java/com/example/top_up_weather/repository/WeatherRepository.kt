@@ -1,7 +1,9 @@
 package com.example.top_up_weather.repository
 
+import android.util.Log
 import com.example.top_up_weather.AppCoroutineDispatcher
 import com.example.top_up_weather.data.local.LocalDataSource
+import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.model.Weather
 import com.example.top_up_weather.data.remote.api.RemoteSource
 import com.example.top_up_weather.utils.Resource
@@ -23,22 +25,36 @@ class WeatherRepository @Inject constructor(
             val currentData: Weather = localDataSource.getWeather().first()
             Log.e("currrentdata", currentData.toString())
             emit(Resource.Loading(currentData))
-            fetchWeatherAndCache()
+
+            if (!currentData.isNullOrEmpty()) {
+                fetchWeatherAndCache()
+            } else {
+                val weather = remoteSource.getCurrentWeather(citiesQueryString).body()?.list
+                localDataSource.saveList(weather)
+            }
+
             emitAll(localDataSource.getWeather().map { Resource.Success(it) })
         }.catch { cause ->
-            val previousData: Weather = localDataSource.getWeather().first()
-            emit(Resource.Error(cause, previousData))
+            val previousData: List<CityWeather> = localDataSource.getWeather().first()
+            emit(Resource.Error(cause.message!!, previousData))
             cause.printStackTrace()
         }.flowOn(dispatcher.io)
     }
 
+
     private suspend fun fetchWeatherAndCache() {
-        val weather: Weather? = remoteSource.getCurrentWeather(citiesQueryString).body()
-        localDataSource.save(weather)
+        val weather = remoteSource.getCurrentWeather(citiesQueryString).body()?.list
+        weather?.map {
+            localDataSource.update(it.wind, it.sys, it.main, it.visibility, it.weather, it.id)
+        }
     }
 
-    suspend fun saveWeather(weather: Weather){
-        localDataSource.save(weather)
+    suspend fun saveWeather(weather: CityWeather) {
+        localDataSource.saveWeather(weather)
+    }
+
+    fun isFavorite(isLiked: Boolean) {
+        localDataSource.getFavorites(isLiked)
     }
 
 

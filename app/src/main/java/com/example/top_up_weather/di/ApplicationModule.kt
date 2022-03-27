@@ -6,7 +6,7 @@ import com.example.top_up_weather.AppCoroutineDispatcher
 import com.example.top_up_weather.BuildConfig
 import com.example.top_up_weather.data.local.LocalDataSource
 import com.example.top_up_weather.data.local.WeatherDatabase
-import com.example.top_up_weather.data.local.db.WeatherDao
+import com.example.top_up_weather.data.local.WeatherDao
 import com.example.top_up_weather.data.remote.api.RemoteImpl
 import com.example.top_up_weather.data.remote.api.RemoteSource
 import com.example.top_up_weather.data.remote.api.WeatherService

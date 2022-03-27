@@ -1,70 +1,57 @@
 package com.example.top_up_weather.data.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.top_up_weather.data.local.TypeConverters
 import com.squareup.moshi.JsonClass
+import kotlinx.android.parcel.Parcelize
 
 
 @Entity(tableName = "weather")
-@JsonClass(generateAdapter = true)
 data class Weather(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int = 0,
-    @ColumnInfo(name = "cnt")
     val cnt: Int,
-    @ColumnInfo(name = "list")
     val list: List<CityWeather>
 )
 
-@JsonClass(generateAdapter = true)
+@Parcelize
 data class WeatherX(
     val description: String,
     val icon: String,
     val id: Int,
     val main: String
-)
+): Parcelable
 
-@JsonClass(generateAdapter = true)
+@Parcelize
 data class Sys(
     val country: String,
     val sunrise: Int,
     val sunset: Int,
     val timezone: Int
-)
+): Parcelable
 
-@JsonClass(generateAdapter = true)
+@Parcelize
 data class Wind(
     val deg: Int,
     val speed: Double
-)
+): Parcelable
 
-@JsonClass(generateAdapter = true)
+@Parcelize
 data class Main(
     val feels_like: Double,
     val humidity: Int,
     val temp: Double,
     val temp_max: Double,
-    val temp_min: Double
-)
+    val temp_min: Double,
+    val pressure: Int
+): Parcelable
 
-@JsonClass(generateAdapter = true)
+@Parcelize
 data class Coord(
     val lat: Double,
     val lon: Double
-)
-
-@JsonClass(generateAdapter = true)
-data class CityWeather (
-    val coord: Coord,
-    val dt: Int,
-    val id: Int,
-    val main: Main,
-    val name: String,
-    val sys: Sys,
-    val visibility: Int,
-    val weather: List<WeatherX>,
-    val wind: Wind,
-    val isLiked: Boolean
-)
+): Parcelable

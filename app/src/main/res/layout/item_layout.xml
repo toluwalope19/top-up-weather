@@ -43,8 +43,8 @@
 
         <ImageView
             android:id="@+id/unliked"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/heart"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="20dp"
@@ -53,8 +53,8 @@
 
         <ImageView
             android:id="@+id/liked"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/heart_liked"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
