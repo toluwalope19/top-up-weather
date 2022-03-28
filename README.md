@@ -19,4 +19,4 @@ An android app that displays current weather condtions for 20 different cities
 
 * Weather Icons
 
-^ Save favourite cities
+* Save favourite cities and receive hourly updates about weather condition
