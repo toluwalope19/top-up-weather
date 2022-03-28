@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         val constraints =
             Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val periodicRequest = PeriodicWorkRequest
-            .Builder(FetchResultWorker::class.java, 60, TimeUnit.MINUTES)
+            .Builder(FetchResultWorker::class.java, 1, TimeUnit.HOURS)
             .setInitialDelay(5,TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()
