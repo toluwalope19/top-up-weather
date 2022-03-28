@@ -3,7 +3,7 @@ package com.example.top_up_weather.utils
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 
     companion object {
-        fun <T> Success(data: T?): Resource<T> {
+        fun <T> Success(data: T): Resource<T> {
             return Resource(Status.SUCCESS, data, null)
         }
 

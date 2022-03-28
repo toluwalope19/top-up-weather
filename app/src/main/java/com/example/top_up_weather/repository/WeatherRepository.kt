@@ -1,12 +1,16 @@
 package com.example.top_up_weather.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import com.example.top_up_weather.AppCoroutineDispatcher
 import com.example.top_up_weather.data.local.LocalDataSource
 import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.model.Weather
 import com.example.top_up_weather.data.remote.api.RemoteSource
 import com.example.top_up_weather.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -41,6 +45,12 @@ class WeatherRepository @Inject constructor(
         }.flowOn(dispatcher.io)
     }
 
+    fun searchWeatherCities(text:String) = resultLiveDataDatabase(
+        databaseQuery = {
+            localDataSource.getSearchResult(text)
+        }
+    )
+
 
     private suspend fun fetchWeatherAndCache() {
         val weather = remoteSource.getCurrentWeather(citiesQueryString).body()?.list
@@ -53,9 +63,12 @@ class WeatherRepository @Inject constructor(
         localDataSource.saveWeather(weather)
     }
 
-    fun isFavorite(isLiked: Boolean) {
-        localDataSource.getFavorites(isLiked)
-    }
+   private fun <T> resultLiveDataDatabase(databaseQuery: () -> LiveData<T>): LiveData<Resource<T>> =
+        liveData(Dispatchers.IO) {
+            emit(Resource.Loading<T>())
+            val source = databaseQuery.invoke().map { Resource.Success(it) }
+            emitSource(source)
+        }
 
 
 }

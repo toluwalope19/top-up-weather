@@ -1,5 +1,6 @@
 package com.example.top_up_weather.data.local
 
+import androidx.lifecycle.LiveData
 import com.example.top_up_weather.data.model.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -40,6 +41,10 @@ class LocalDataSourceImpl @Inject constructor(private val weatherDao: WeatherDao
         id: Int
     ) {
         return weatherDao.update(wind, sys, main, visibility, weather,id)
+    }
+
+    override fun getSearchResult(search:String): LiveData<List<CityWeather>> {
+        return weatherDao.getSearchResult(search)
     }
 
 }

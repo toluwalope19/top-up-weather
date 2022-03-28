@@ -1,5 +1,6 @@
 package com.example.top_up_weather.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -30,6 +31,9 @@ interface WeatherDao {
 
     @Query("UPDATE city_weather  SET wind = :wind, sys = :sys, main = :main,visibility = :visibility, weather = :weather where id = :id")
     fun update(wind: Wind, sys: Sys, main: Main, visibility: Int, weather: List<WeatherX>, id: Int)
+
+    @Query("Select * from city_weather where name || isliked  like '%' || :search || '%' ")
+    fun getSearchResult(search:String): LiveData<List<CityWeather>>
 
 
 }

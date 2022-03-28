@@ -2,10 +2,10 @@ package com.example.top_up_weather.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -48,9 +48,12 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getWeatherList()
         setUpObserver()
-        textView.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.weatherDetailFragment)
-        }
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     private fun setUpObserver() {
@@ -77,6 +80,51 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
                 }
             }
         })
+
+        viewModel.weatherCities.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    progress.visibility = View.VISIBLE
+                }
+                Resource.Status.SUCCESS -> {
+                    progress.visibility = View.GONE
+                    weather_list.visibility = View.VISIBLE
+                    val list = mutableListOf<CityWeather>()
+                    it.data?.let { list.addAll(it) }
+                    weather_list.layoutManager?.scrollToPosition(0)
+                    adapter = WeatherAdapter(list, this)
+                    weather_list.adapter = adapter
+                    Log.e("newliiist", list.toString())
+                }
+                Resource.Status.ERROR -> {
+                    tv_error2.text = it.message
+                    progress.visibility = View.GONE
+                }
+            }
+        })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu,menu)
+
+        val menuItem = menu.findItem(R.id.action_search)
+        val searchView: SearchView = menuItem.actionView as SearchView
+        searchView.queryHint = "Type here to search"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                viewModel.search(newText.trim())
+                return false
+            }
+
+        })
+        super.onCreateOptionsMenu(menu, inflater)
+
+
     }
 
     companion object {
@@ -91,6 +139,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             view.unliked.setImageResource(R.drawable.heart_liked)
             Log.e("newlysaved", newWeather.toString())
             viewModel.saveWeather(newWeather)
+            viewModel.getWeatherList()
             Snackbar.make(requireView(), "Added city to favourites", Snackbar.LENGTH_LONG).show()
         }
          else{
@@ -98,6 +147,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             view.unliked.setImageResource(R.drawable.heart)
             Log.e("newlyunliked", newWeather.toString())
             viewModel.saveWeather(newWeather)
+            viewModel.getWeatherList()
             Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG).show()
         }
     }
@@ -111,6 +161,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             val newWeather =  cityWeather.copy(isLiked = false)
             view.unliked.setImageResource(R.drawable.heart)
             viewModel.saveWeather(newWeather)
+            viewModel.getWeatherList()
             Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG).show()
         }
         else{
@@ -119,6 +170,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             Log.e("newlyunliked", newWeather.toString())
             adapter?.swapItem(position,0)
             viewModel.saveWeather(newWeather)
+            viewModel.getWeatherList()
             Snackbar.make(requireView(), "Added city to favourites", Snackbar.LENGTH_LONG).show()
         }
     }

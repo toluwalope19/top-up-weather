@@ -1,5 +1,6 @@
 package com.example.top_up_weather.data.local
 
+import androidx.lifecycle.LiveData
 import com.example.top_up_weather.data.model.*
 import kotlinx.coroutines.flow.Flow
 
@@ -11,5 +12,6 @@ interface LocalDataSource {
     fun getFavorites(isLiked: Boolean): List<CityWeather>
     fun isFavorite(id: Int): Flow<List<CityWeather>>
     fun update(wind: Wind, sys: Sys, main: Main, visibility: Int, weather: List<WeatherX>,id: Int)
+    fun getSearchResult(search:String): LiveData<List<CityWeather>>
     // suspend fun save(weather: CityWeather)
 }
