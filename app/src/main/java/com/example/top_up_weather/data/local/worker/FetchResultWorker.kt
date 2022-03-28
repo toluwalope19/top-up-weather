@@ -9,19 +9,18 @@ import com.example.top_up_weather.data.local.LocalDataSource
 import com.example.top_up_weather.data.model.CityWeather
 import com.example.top_up_weather.data.remote.api.RemoteSource
 import com.example.top_up_weather.repository.WeatherRepository
+import com.example.top_up_weather.utils.Resource
 import com.google.gson.Gson
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 @HiltWorker
 class FetchResultWorker @AssistedInject constructor(
     val remoteSource: RemoteSource,
-    private val localDataSource: LocalDataSource,
+    private val repository: WeatherRepository,
     private val sharedPreferences: SharedPreferences,
     @Assisted context: Context,
     @Assisted params: WorkerParameters
@@ -33,18 +32,9 @@ class FetchResultWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         withContext(Dispatchers.IO) {
-            val response = remoteSource.getCurrentWeather(citiesQueryString).body()?.list
-            localDataSource.getWeather().first()
-            Log.e("newres", response.toString())
-            response?.map {
-                localDataSource.update(it.wind, it.sys, it.main, it.visibility, it.weather, it.id)
-            }
-            val json = saveWeatherList(response)
+            val response = repository.fetchWeather().first()
+            val json = saveWeatherList(response.data)
             sharedPreferences.edit().putString("key", json).apply()
-            // outputData = Data.Builder().putAll(workDataOf("result" to response?.toString())).build()
-            Log.e("outputdata", response.toString())
-
-
         }
         return Result.success()
     }
@@ -53,4 +43,5 @@ class FetchResultWorker @AssistedInject constructor(
         val list = Gson().toJson(listOfString)
         return list
     }
+
 }

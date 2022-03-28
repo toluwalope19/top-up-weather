@@ -45,18 +45,13 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHostFragment.navController
         toolbar.setupWithNavController(navController)
 
-        val data = getPeriodicData()
+        val workerData = getPeriodicData()
 
-      val go =   data?.filter {
-            it?.isLiked == false
+        val listOfFavourites = workerData?.filter {
+            it?.isLiked == true
         }
-        Log.e("mysavedshared", go.toString())
-
-
+        Log.e("mysavedshared", listOfFavourites.toString())
     }
-
-
-
 
 
     private fun getPeriodicData(): List<CityWeather?>? {
@@ -69,16 +64,16 @@ class MainActivity : AppCompatActivity() {
         val constraints =
             Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val periodicRequest = PeriodicWorkRequest
-            .Builder(FetchResultWorker::class.java,16,TimeUnit.MINUTES)
+            .Builder(FetchResultWorker::class.java, 16, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()
         workmanager.enqueue(periodicRequest)
         workmanager.getWorkInfoByIdLiveData(periodicRequest.id)
             .observe(this, Observer {
-                    //val r = it.outputData.hasKeyWithValueOfType("result")
-                   val r = it.outputData.getString("result")
+                //val r = it.outputData.hasKeyWithValueOfType("result")
+                val r = it.outputData.getString("result")
 
-                    Log.e("outputdatas", r.toString())
+                Log.e("outputdatas", r.toString())
             })
 
     }
@@ -94,7 +89,6 @@ class MainActivity : AppCompatActivity() {
 
         return Gson().fromJson<List<CityWeather>>(listOfString, listType)
     }
-
 
 
     override fun onStart() {

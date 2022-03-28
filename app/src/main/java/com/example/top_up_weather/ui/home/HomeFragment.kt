@@ -137,7 +137,6 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             adapter?.swapItem(position,0)
             val newWeather =  cityWeather.copy(isLiked = true)
             view.unliked.setImageResource(R.drawable.heart_liked)
-            Log.e("newlysaved", newWeather.toString())
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
             Snackbar.make(requireView(), "Added city to favourites", Snackbar.LENGTH_LONG).show()
@@ -145,7 +144,6 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
          else{
             val newWeather =  cityWeather.copy(isLiked = false)
             view.unliked.setImageResource(R.drawable.heart)
-            Log.e("newlyunliked", newWeather.toString())
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
             Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG).show()
@@ -167,7 +165,6 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
         else{
             val newWeather =  cityWeather.copy(isLiked = true)
             view.unliked.setImageResource(R.drawable.heart_liked)
-            Log.e("newlyunliked", newWeather.toString())
             adapter?.swapItem(position,0)
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
