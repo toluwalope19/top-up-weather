@@ -41,7 +41,6 @@ class WeatherDetailFragment : Fragment() {
     }
 
 
-
     private fun setView(){
          WeatherIconUtils.getIconResource(requireContext(),weatherIcon,args.cityWeather.weather.first().description)
         val date = getCurrentDateTime()

@@ -4,12 +4,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.top_up_weather.R
 import com.example.top_up_weather.data.model.CityWeather
+import com.example.top_up_weather.utils.WeatherIconUtils
 import kotlinx.android.synthetic.main.item_layout.view.*
+import kotlinx.android.synthetic.main.weather_detail_fragment.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 import android.view.LayoutInflater
@@ -51,9 +55,28 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
 
     class ItemListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+            val formatter = SimpleDateFormat(format, locale)
+            return formatter.format(this)
+        }
+
+        fun getCurrentDateTime(): Date {
+            return Calendar.getInstance().time
+        }
+
+        var currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
         fun bindView(item: CityWeather) {
-            itemView.title.text = item.name
-            itemView.temp.text = item.main.temp.toString()
+            val date = getCurrentDateTime()
+            val dateInString = date.toString("yyyy/MM/dd ")
+            itemView.location.text = "${item.name}, ${item.sys.country}"
+            itemView.temp.text = item.main.temp.toString() + " \u2109"
+            WeatherIconUtils.getIconResource(
+                itemView.context,
+                itemView.weatherIcon,
+                item.weather.first().description
+            )
+            itemView.date_today.text = dateInString
+            itemView.time_today.text = currentTime
             if (item.isLiked) {
                 itemView.unliked.setImageResource(R.drawable.heart_liked)
                 Log.e("isLike", "thisonewasliked")
@@ -74,7 +97,7 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
                 delegate?.onLikeClicked(position, cityWeather, this.layoutPosition)
             }
             itemView.liked.setOnClickListener {
-                delegate?.onUnlikeClicked(position, cityWeather,this.layoutPosition)
+                delegate?.onUnlikeClicked(position, cityWeather, this.layoutPosition)
             }
             itemView.setOnClickListener {
                 delegate?.onItemClicked(position, cityWeather)
@@ -103,13 +126,15 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
     }
 
     interface OnItemClickListener {
-        fun onLikeClicked(view: View, cityWeather: CityWeather,position: Int)
+        fun onLikeClicked(view: View, cityWeather: CityWeather, position: Int)
         fun onItemClicked(view: View, cityWeather: CityWeather)
-        fun onUnlikeClicked(view: View, cityWeather: CityWeather,position: Int)
+        fun onUnlikeClicked(view: View, cityWeather: CityWeather, position: Int)
     }
 
     fun swapItem(fromPosition: Int, toPosition: Int) {
         Collections.swap(list, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
     }
+
+
 }
