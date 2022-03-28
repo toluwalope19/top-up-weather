@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Top-Up-Weather</string>
+    <string name="unknown_error_message">Oops, something went wrong</string>
+    <string name="check_connectivity_message">Please check your connectivity</string>
+    <string name="can_not_connect_to_sever_message">Cannot connect to server</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

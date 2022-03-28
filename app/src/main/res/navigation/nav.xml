@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.top_up_weather.ui.home.HomeFragment"
+        android:label="Top-up Weather"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_weatherDetailFragment"
+            app:destination="@id/weatherDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_weatherDetailFragment2"
+            app:destination="@id/weatherDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherDetailFragment"
+        android:name="com.example.top_up_weather.ui.details.WeatherDetailFragment"
+        android:label="Weather Details"
+        tools:layout="@layout/weather_detail_fragment" >
+        <argument
+            android:name="cityWeather"
+            app:argType="com.example.top_up_weather.data.model.CityWeather" />
+    </fragment>
+</navigation>
