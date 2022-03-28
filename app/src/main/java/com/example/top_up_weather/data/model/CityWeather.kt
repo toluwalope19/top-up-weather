@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "city_weather")
 @Parcelize
 data class CityWeather (
+
     @ColumnInfo(name= "coord")
     val coord: Coord,
     @ColumnInfo(name= "dt")

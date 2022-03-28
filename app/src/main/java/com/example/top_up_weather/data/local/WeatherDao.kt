@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeatherDao {
-    @Query("select * from city_weather")
+    @Query("select * from city_weather ORDER BY isliked DESC  ")
     fun fetchWeather(): Flow<List<CityWeather>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

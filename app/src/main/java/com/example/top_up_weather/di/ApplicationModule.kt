@@ -1,6 +1,7 @@
 package com.example.top_up_weather.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.top_up_weather.AppCoroutineDispatcher
 import com.example.top_up_weather.BuildConfig
@@ -109,4 +110,8 @@ class ApplicationModule {
         return AppCoroutineDispatcher()
     }
 
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.applicationContext.getSharedPreferences("TOP_UP", Context.MODE_PRIVATE)
 }

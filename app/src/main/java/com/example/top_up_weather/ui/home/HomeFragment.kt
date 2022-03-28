@@ -33,7 +33,7 @@ import com.like.OnLikeListener
 @AndroidEntryPoint
 class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
 
-    var weather : Weather? = null
+    var adapter : WeatherAdapter? = null
 
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreateView(
@@ -65,7 +65,9 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
                         progress.visibility = View.GONE
                         val list = mutableListOf<CityWeather>()
                         it.data?.let { list.addAll(it) }
-                        weather_list.adapter = WeatherAdapter(list, this)
+                        weather_list.layoutManager?.scrollToPosition(0)
+                        adapter = WeatherAdapter(list, this)
+                        weather_list.adapter = adapter
                         Log.e("newliiist", list.toString())
                     }
                     Resource.Status.ERROR -> {
@@ -81,9 +83,10 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
         fun newInstance() = HomeFragment()
     }
 
-    override fun onLikeClicked(view: View, cityWeather: CityWeather) {
+    override fun onLikeClicked(view: View, cityWeather: CityWeather, position: Int) {
         if(!cityWeather.isLiked){
             cityWeather.isLiked
+            adapter?.swapItem(position,0)
             val newWeather =  cityWeather.copy(isLiked = true)
             view.unliked.setImageResource(R.drawable.heart_liked)
             Log.e("newlysaved", newWeather.toString())
@@ -103,7 +106,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
         Navigation.findNavController(view).navigate(HomeFragmentDirections.actionHomeFragmentToWeatherDetailFragment(cityWeather))
     }
 
-    override fun onUnlikeClicked(view: View, cityWeather: CityWeather) {
+    override fun onUnlikeClicked(view: View, cityWeather: CityWeather,position: Int) {
         if(cityWeather.isLiked){
             val newWeather =  cityWeather.copy(isLiked = false)
             view.unliked.setImageResource(R.drawable.heart)
@@ -114,6 +117,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             val newWeather =  cityWeather.copy(isLiked = true)
             view.unliked.setImageResource(R.drawable.heart_liked)
             Log.e("newlyunliked", newWeather.toString())
+            adapter?.swapItem(position,0)
             viewModel.saveWeather(newWeather)
             Snackbar.make(requireView(), "Added city to favourites", Snackbar.LENGTH_LONG).show()
         }

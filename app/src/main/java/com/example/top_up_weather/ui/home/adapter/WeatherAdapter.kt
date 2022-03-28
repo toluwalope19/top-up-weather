@@ -4,14 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.top_up_weather.R
 import com.example.top_up_weather.data.model.CityWeather
 import kotlinx.android.synthetic.main.item_layout.view.*
+import java.util.*
 
 import android.view.LayoutInflater
 import android.view.View
@@ -45,10 +44,9 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
 
         holder.bindView(list[position])
-        holder.bindSelectedItem(holder.itemView,delegate,list[position])
+        holder.bindSelectedItem(holder.itemView, delegate, list[position])
 
     }
-
 
 
     class ItemListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,10 +54,10 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
         fun bindView(item: CityWeather) {
             itemView.title.text = item.name
             itemView.temp.text = item.main.temp.toString()
-            if(item.isLiked){
+            if (item.isLiked) {
                 itemView.unliked.setImageResource(R.drawable.heart_liked)
                 Log.e("isLike", "thisonewasliked")
-            }else{
+            } else {
                 itemView.unliked.setImageResource(R.drawable.heart)
             }
         }
@@ -73,17 +71,16 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
 //                delegate?.onLikeClicked(position,cityWeather)
 //            }
             itemView.unliked.setOnClickListener {
-                delegate?.onLikeClicked(position,cityWeather)
+                delegate?.onLikeClicked(position, cityWeather, this.layoutPosition)
             }
             itemView.liked.setOnClickListener {
-                delegate?.onUnlikeClicked(position,cityWeather)
+                delegate?.onUnlikeClicked(position, cityWeather,this.layoutPosition)
             }
             itemView.setOnClickListener {
-                delegate?.onItemClicked(position,cityWeather)
+                delegate?.onItemClicked(position, cityWeather)
             }
         }
     }
-
 
 
     companion object {
@@ -106,8 +103,13 @@ class WeatherAdapter(private var list: MutableList<CityWeather>, private var del
     }
 
     interface OnItemClickListener {
-        fun onLikeClicked(view: View, cityWeather: CityWeather)
-        fun onItemClicked(view: View,cityWeather: CityWeather)
-        fun onUnlikeClicked(view: View,cityWeather: CityWeather)
+        fun onLikeClicked(view: View, cityWeather: CityWeather,position: Int)
+        fun onItemClicked(view: View, cityWeather: CityWeather)
+        fun onUnlikeClicked(view: View, cityWeather: CityWeather,position: Int)
+    }
+
+    fun swapItem(fromPosition: Int, toPosition: Int) {
+        Collections.swap(list, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 }

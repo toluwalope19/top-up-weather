@@ -31,9 +31,6 @@ class HomeViewModel @Inject constructor(
         "524901,703448,2643743,2332459,184742,2643743,2925533,2950158,1850147,1816670,2968815,5165418,5165664,6111984,2867714,4104031,2352778,2634716,2800866,3117735"
 
 
-    init {
-        getWeatherList()
-    }
 
     fun getWeatherList() {
 
@@ -49,17 +46,6 @@ class HomeViewModel @Inject constructor(
                 _getWeather.postValue(UIEvent(Resource.Error(e.message!!)))
             }
         }
-
-//        viewModelScope.launch {
-//
-//            _getWeather.postValue(UIEvent(Resource.loading(null)))
-//            try {
-//                val response = weatherHelperImpl.getCurrentWeather(countryQueryString)
-//                _getWeather.postValue(UIEvent(Resource.success(response.body())))
-//            } catch (e: Throwable) {
-//                _getWeather.postValue(UIEvent(Resource.error(e, null)))
-//            }
-//        }
     }
 
     fun saveWeather(weather: CityWeather){
