@@ -1,10 +1,13 @@
 package com.example.top_up_weather.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -33,7 +36,8 @@ import com.like.OnLikeListener
 @AndroidEntryPoint
 class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
 
-    var adapter : WeatherAdapter? = null
+    var adapter: WeatherAdapter? = null
+
 
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreateView(
@@ -81,6 +85,7 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
             }
         })
 
+
         viewModel.weatherCities.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> {
@@ -94,7 +99,6 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
                     weather_list.layoutManager?.scrollToPosition(0)
                     adapter = WeatherAdapter(list, this)
                     weather_list.adapter = adapter
-                    Log.e("newliiist", list.toString())
                 }
                 Resource.Status.ERROR -> {
                     tv_error2.text = it.message
@@ -104,14 +108,15 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
         })
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu,menu)
+        inflater.inflate(R.menu.menu, menu)
 
         val menuItem = menu.findItem(R.id.action_search)
         val searchView: SearchView = menuItem.actionView as SearchView
         searchView.queryHint = "Type here to search"
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -132,40 +137,41 @@ class HomeFragment : Fragment(), WeatherAdapter.OnItemClickListener {
     }
 
     override fun onLikeClicked(view: View, cityWeather: CityWeather, position: Int) {
-        if(!cityWeather.isLiked){
+        if (!cityWeather.isLiked) {
             cityWeather.isLiked
-            adapter?.swapItem(position,0)
-            val newWeather =  cityWeather.copy(isLiked = true)
+            adapter?.swapItem(position, 0)
+            val newWeather = cityWeather.copy(isLiked = true)
             view.unliked.setImageResource(R.drawable.heart_liked)
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
             Snackbar.make(requireView(), "Added city to favourites", Snackbar.LENGTH_LONG).show()
-        }
-         else{
-            val newWeather =  cityWeather.copy(isLiked = false)
+        } else {
+            val newWeather = cityWeather.copy(isLiked = false)
             view.unliked.setImageResource(R.drawable.heart)
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
-            Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG)
+                .show()
         }
     }
 
     override fun onItemClicked(view: View, cityWeather: CityWeather) {
-        Navigation.findNavController(view).navigate(HomeFragmentDirections.actionHomeFragmentToWeatherDetailFragment(cityWeather))
+        Navigation.findNavController(view)
+            .navigate(HomeFragmentDirections.actionHomeFragmentToWeatherDetailFragment(cityWeather))
     }
 
-    override fun onUnlikeClicked(view: View, cityWeather: CityWeather,position: Int) {
-        if(cityWeather.isLiked){
-            val newWeather =  cityWeather.copy(isLiked = false)
+    override fun onUnlikeClicked(view: View, cityWeather: CityWeather, position: Int) {
+        if (cityWeather.isLiked) {
+            val newWeather = cityWeather.copy(isLiked = false)
             view.unliked.setImageResource(R.drawable.heart)
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
-            Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG).show()
-        }
-        else{
-            val newWeather =  cityWeather.copy(isLiked = true)
+            Snackbar.make(requireView(), "removed city from favourites", Snackbar.LENGTH_LONG)
+                .show()
+        } else {
+            val newWeather = cityWeather.copy(isLiked = true)
             view.unliked.setImageResource(R.drawable.heart_liked)
-            adapter?.swapItem(position,0)
+            adapter?.swapItem(position, 0)
             viewModel.saveWeather(newWeather)
             viewModel.getWeatherList()
             Snackbar.make(requireView(), "Added city to favourites", Snackbar.LENGTH_LONG).show()

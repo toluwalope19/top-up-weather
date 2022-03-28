@@ -1,21 +1,12 @@
 package com.example.top_up_weather.ui.home
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.top_up_weather.data.model.CityWeather
-import com.example.top_up_weather.data.model.Weather
-import com.example.top_up_weather.data.remote.api.RemoteImpl
 import com.example.top_up_weather.repository.WeatherRepository
-import com.example.top_up_weather.utils.ApiError
 import com.example.top_up_weather.utils.Resource
 import com.example.top_up_weather.utils.UIEvent
-import com.example.top_up_weather.utils.Utils.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

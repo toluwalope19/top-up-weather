@@ -24,6 +24,4 @@ abstract class DataSourceModule {
     abstract fun provideDataSource(localDataSource: LocalDataSourceImpl?): LocalDataSource?
 
 
-//    @Binds
-//    abstract fun provideRemoteImpl(remote: RemoteImpl?): RemoteSource?
 }

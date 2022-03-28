@@ -17,10 +17,14 @@ const val messageExtra = "messageExtra"
 class Notification : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
 
+
         val notification = NotificationCompat.Builder(context, channelID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(intent?.getStringExtra(titleExtra))
+            .setAutoCancel(true)
             .setContentText(intent?.getStringExtra(messageExtra))
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText( messageExtra))
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
