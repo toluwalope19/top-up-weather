@@ -36,6 +36,7 @@ import java.util.*
 @HiltWorker
 class FetchResultWorker @AssistedInject constructor(
     val remoteSource: RemoteSource,
+    val localDataSource: LocalDataSource,
     private val repository: WeatherRepository,
     private val sharedPreferences: SharedPreferences,
     @Assisted val context: Context,
@@ -46,25 +47,19 @@ class FetchResultWorker @AssistedInject constructor(
     var favourite: CityWeather? = null
 
     override suspend fun doWork(): Result {
-        withContext(Dispatchers.IO) {
-            val response = repository.fetchWeather().first()
-            favourite = response.data?.firstOrNull {
-                it.isLiked
-            }
-            val json = saveWeatherList(response.data)
-            sharedPreferences.edit().putString("key", json).apply()
-            if(favourite != null){
-                createNotification()
-            }
+
+        val apiInput = inputData.getString("API_PARAM") ?: return Result.failure()
+        val response = remoteSource.getCurrentWeather(apiInput).body()?.list
+        val response1 = localDataSource.getWeather().first()
+        val randomFavouriteWeather: CityWeather = response1.first { it.isLiked }
+        favourite = response?.filter { it.id == randomFavouriteWeather.id }?.firstOrNull()
+        val output = workDataOf("API_PARAM" to favourite.toString())
+
+        if (favourite != null) {
+            createNotification()
         }
         return Result.success()
     }
-
-    private fun saveWeatherList(listOfString: List<CityWeather?>?): String? {
-        val list = Gson().toJson(listOfString)
-        return list
-    }
-
 
 
     private fun createNotification() {
@@ -73,12 +68,14 @@ class FetchResultWorker @AssistedInject constructor(
             .setContentTitle("${favourite?.name} Weather Report")
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText( "${favourite?.main?.temp} degrees and feels like we have ${favourite?.weather?.first()?.description} "))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("${favourite?.main?.temp} degrees and feels like we have ${favourite?.weather?.first()?.description} ")
+            )
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(NOTIFICATION_ID,notification)
+        manager.notify(NOTIFICATION_ID, notification)
     }
 
     companion object {

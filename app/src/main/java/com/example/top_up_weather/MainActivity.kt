@@ -65,12 +65,6 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHostFragment.navController
         toolbar.setupWithNavController(navController)
 
-        val workerData = getPeriodicData()
-
-        val listOfFavourites = workerData?.filter {
-            it?.isLiked == true
-        }
-        Log.e("worker2", listOfFavourites.toString())
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -87,25 +81,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPeriodicData(): List<CityWeather?>? {
-        val response = sharedPreferences.getString("key", "")
-        return getCityWeatherList(response)
-    }
-
 
     private fun setUpPeriodicRequest() {
+        val citiesQueryString =
+            "524901,703448,2643743,2332459,184742,2643743,2925533,2950158,1850147,1816670,2968815,5165418,5165664,6111984,2867714,4104031,2352778,2634716,2800866,3117735"
+
         val workmanager = WorkManager.getInstance(applicationContext)
         val constraints =
             Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val periodicRequest = PeriodicWorkRequest
-            .Builder(FetchResultWorker::class.java, 1, TimeUnit.HOURS)
+            .Builder(FetchResultWorker::class.java, 16, TimeUnit.MINUTES)
+            .setInputData( workDataOf("API_PARAM" to citiesQueryString))
             .setInitialDelay(5,TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()
+
         workmanager.enqueue(periodicRequest)
         workmanager.getWorkInfoByIdLiveData(periodicRequest.id)
             .observe(this, Observer {
-
+                
             })
 
     }
